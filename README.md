@@ -32,21 +32,32 @@ ng generate component 'COMPONENT NAME'
 ``` 
 this component can consist of other components and can use any library you want.
 
-The only restriction is that it has 2 @Inputs:
+The widget can have 3 inputs and 2 output:
 ```javascript
   @Input()
   inputData: any;
   @Input()
   useDefaultData = false;
+  @Input()
+  config = any;
+  @Output()
+  outputData: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  action: EventEmitter<any> = new EventEmitter<any>();
 ```
 
 `inputData` is the data that you will manipulate through form script
-in Form Builder by using function setFieldValue. This can be any object or an array of objects.
+in Form Builder by using function setFieldValue. This can be any object or an array of objects. This value gets persisted in the composition as a generic.
 
 `useDefaultData` is a boolean parameter that will be passed when using the widget during
 form building period so the user when using the widget will be able to see some mock data. If the input `useDefaultData` is passed to component as true than 
 it is the responsibility of the component that it shows some representative mock data.
 
+`config` non mandatory configuration of a widget
+
+`outputData` widget (if they are not read only) can also output the data. This should be the same object as provided to the widget from `inputData` - so if the widget changes its data it shouldbe emitted thru this EventEmitter
+
+`action` widget can also emit some action that you want to hook on in the Form builder that can potentially change some things.
 
 ### Configure the angular component as a web-component
 
